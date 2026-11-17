@@ -42,6 +42,23 @@ public class Scripture
         }
     }
 
+    public void ShowRandomWord()
+    {
+        List<Word> hiddenWords = _words
+            .Where(word => word.IsHidden())
+            .ToList();
+
+        if (hiddenWords.Count == 0)
+        {
+            return;
+        }
+
+        Random random = new Random();
+        int index = random.Next(hiddenWords.Count);
+
+        hiddenWords[index].Show();
+    }
+
     public string GetDisplayText()
     {
         List<string> displayWords = new List<string>();

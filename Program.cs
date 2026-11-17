@@ -11,25 +11,36 @@ class Program
 
         Scripture scripture = new Scripture(reference, text);
 
+        // Creativity: Added a hint feature that reveals one randomly
+        // hidden word to help users practise memorizing the scripture.
+
         string input = "";
 
-        while (input.ToLower() != "quit" && !scripture.IsCompletelyHidden())
+        while (!input.Equals("quit", StringComparison.OrdinalIgnoreCase)
+               && !scripture.IsCompletelyHidden())
         {
             Console.Clear();
 
             Console.WriteLine(scripture.GetDisplayText());
-
             Console.WriteLine();
 
-            Console.WriteLine("Press Enter to hide more words or type 'quit' to exit.");
+            Console.WriteLine("Press Enter to hide 3 words, type 'hint' to reveal a word, or type 'quit' to exit.");
 
             input = Console.ReadLine() ?? "";
 
-            if (!input.Equals("quit", StringComparison.OrdinalIgnoreCase))
+            if (input.Equals("hint", StringComparison.OrdinalIgnoreCase))
+            {
+                scripture.ShowRandomWord();
+            }
+            else if (!input.Equals("quit", StringComparison.OrdinalIgnoreCase))
             {
                 scripture.HideRandomWords(3);
             }
         }
+
+        Console.Clear();
+        Console.WriteLine(scripture.GetDisplayText());
+        Console.WriteLine();
 
         Console.WriteLine("Thank you for using Scripture Memorizer!");
     }
